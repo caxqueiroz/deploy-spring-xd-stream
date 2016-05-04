@@ -21,7 +21,12 @@ public class DeployStreamsApplication implements CommandLineRunner{
 		SpringXDTemplate xdt = new SpringXDTemplate(new URI("http://localhost:9393"));
 
         //java.lang.String name,java.lang.String definition,boolean deploy
-        StreamDefinitionResource streamDefinitionResource = xdt.streamOperations().createStream("test-stream","time | log",true);
+        xdt.streamOperations().createStream("test-stream","time | log",true);
+
+        //sleep for 10 seconds.
+        Thread.sleep(10000);
+
+        xdt.streamOperations().destroy("test-stream");
 
 
     }
