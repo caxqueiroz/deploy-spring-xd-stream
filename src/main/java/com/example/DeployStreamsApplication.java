@@ -1,5 +1,6 @@
 package com.example;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,9 @@ import java.net.URI;
 @SpringBootApplication
 public class DeployStreamsApplication implements CommandLineRunner{
 
+	@Value("${spring.xd.admin.server.uri}")
+    private String springXDAdminServerURI;
+
 	public static void main(String[] args) {
 		SpringApplication.run(DeployStreamsApplication.class, args);
 	}
@@ -18,7 +22,7 @@ public class DeployStreamsApplication implements CommandLineRunner{
 	@Override
 	public void run(String... strings) throws Exception {
 
-		SpringXDTemplate xdt = new SpringXDTemplate(new URI("http://localhost:9393"));
+		SpringXDTemplate xdt = new SpringXDTemplate(new URI(springXDAdminServerURI));
 
         //java.lang.String name,java.lang.String definition,boolean deploy
         xdt.streamOperations().createStream("test-stream","time | log",true);
